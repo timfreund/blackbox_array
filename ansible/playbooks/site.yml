@@ -1,0 +1,28 @@
+---
+- hosts: all
+  tasks:
+    - name: download blackbox binary
+      get_url:
+        url: https://tim.freunds.net/media/files/blackbox/blackbox_exporter
+        dest: /usr/local/bin/blackbox_exporter
+        mode: 0755
+        checksum: sha256:8d1ea4d9afc29232ac3a2f6117d19b2248e4e441f2c3547f499fdb81c335ec5d
+    - name: download blackbox configuration
+      get_url:
+        url: https://tim.freunds.net/media/files/blackbox/blackbox.yml
+        dest: /etc/blackbox.yml
+        mode: 0444
+        checksum: sha256:554f87b32e882240af242c585f3535be05d9640c023872778695ae53ce12e488
+    - name: create systemd configuration
+      template:
+        src: ./templates/blackbox.service.j2
+        dest: /etc/systemd/system/blackbox.service
+    - name: start blackbox service
+      service:
+        name: blackbox
+        state: restarted
+  # roles:
+  #   - timfreund.blackbox
+  become: true
+
+...
