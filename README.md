@@ -21,6 +21,7 @@ The Ansible code configures the following:
 This code is pretty rough.  Just off the top of my head, it could use
 the following:
 
+- Your AWS credentials file probably isn't at /home/tim/.aws/credentials
 - Extract the SSH public key from terraform/userdata
 - Extract network data / security CIDR blocks into Terraform variables
 - Extract domain name into Terraform variable
